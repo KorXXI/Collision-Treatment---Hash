@@ -6,6 +6,7 @@ class Main
 	private static int total = 0;
 	public static void main (String[] args)
 	{
+		Manager manage = new Manager();
 		//Prime = 13		
 		for(int i = 0; i < 13; i++)
 		{
@@ -13,18 +14,13 @@ class Main
 			header[i][0] = -1;
 			content[i][1] = -2; //empty
 		}
-		insert(17);//
-		insert(28);//
-		insert(23);//
-		insert(33);//
-		insert(30);
-		insert(47);
-		insert(14);//
-		remove(17);
-		remove(14);
-		remove(28);
-		remove(33);
-		remove(23);
+		
+		Produto azul = new Produto("azul", 12, 45.00);
+		Produto verde = new Produto("verde", 5, 22.11);
+		
+		
+		manage.insert(azul);//
+		manage.insert(verde);//
 		System.out.println("Header");
 		System.out.println("------------------------");
 		System.out.println("1: Tonico " + header[0][0] + " Ramona " + header[0][1]);
@@ -43,12 +39,12 @@ class Main
 		System.out.println("------------------------");
 		System.out.println("Table");
 		System.out.println("------------------------");
-		System.out.println("1: Chave " + content[0][0] + " Ponteiro " + content[0][1]);
-		System.out.println("2: Chave " + content[1][0] + " Ponteiro " + content[1][1]);
-		System.out.println("3: Chave " + content[2][0] + " Ponteiro " + content[2][1]);
-		System.out.println("4: Chave " + content[3][0] + " Ponteiro " + content[3][1]);
-		System.out.println("5: Chave " + content[4][0] + " Ponteiro " + content[4][1]);
-		System.out.println("6: Chave " + content[5][0] + " Ponteiro " + content[5][1]);
+		System.out.println("1: Chave " + manage.getProdutos()[0].getCodigo() + " Ponteiro " + manage.getProdutos()[0].getNext());
+		System.out.println("2: Chave " + manage.getProdutos()[1].getCodigo() + " Ponteiro " + manage.getProdutos()[1].getNext());
+		System.out.println("3: Chave " + manage.getProdutos()[2].getCodigo() + " Ponteiro " + manage.getProdutos()[2].getNext());
+		System.out.println("4: Chave " + manage.getProdutos()[3].getCodigo() + " Ponteiro " + manage.getProdutos()[3].getNext());
+		System.out.println("5: Chave " + manage.getProdutos()[4].getCodigo() + " Ponteiro " + manage.getProdutos()[4].getNext());
+		System.out.println("66: Chave " + manage.getProdutos()[5].getCodigo() + " Ponteiro " + manage.getProdutos()[5].getNext());
 		System.out.println("7: Chave " + content[6][0] + " Ponteiro " + content[6][1]);
 		System.out.println("8: Chave " + content[7][0] + " Ponteiro " + content[7][1]);
 		System.out.println("9: Chave " + content[8][0] + " Ponteiro " + content[8][1]);
@@ -114,6 +110,7 @@ class Main
 				{
 					content[header[placement][0]][1] = index;
 					header[placement][1] = index;
+					header[placement][0] = index; 
 				}
 			} else
 			{
@@ -178,7 +175,7 @@ class Main
 					content[index][0] = 0;
 					content[index][1] = -2;
 					
-					content[index][1] = -1; //clears place
+					content[index][1] = -2; //clears place
 					System.out.println("E removi");
 					
 				} else 
@@ -204,7 +201,7 @@ class Main
 						content[header[placement][0]][1] = auxp;
 						content[header[placement][0]][0] = aux;
 						
-						content[index][1] = -1; //clears place
+						content[index][1] = -2; //clears place
 						System.out.println("E removi");
 						
 					} else 
