@@ -13,17 +13,18 @@ class Main
 			header[i][0] = -1;
 			content[i][1] = -2; //empty
 		}
-		insert(17);
-		insert(28);
-		insert(23);
-		insert(33);
-		insert(46);
-		insert(13);
-		insert(15);
-		insert(16);
-		insert(5);
-		insert(41);
-		insert(11);
+		insert(17);//
+		insert(28);//
+		insert(23);//
+		insert(33);//
+		insert(30);
+		insert(47);
+		insert(14);//
+		remove(17);
+		remove(14);
+		remove(28);
+		remove(33);
+		remove(23);
 		System.out.println("Header");
 		System.out.println("------------------------");
 		System.out.println("1: Tonico " + header[0][0] + " Ramona " + header[0][1]);
@@ -56,12 +57,26 @@ class Main
 		System.out.println("12: Chave " + content[11][0] + " Ponteiro " + content[11][1]);
 		System.out.println("13: Chave " + content[12][0] + " Ponteiro " + content[12][1]);
 		System.out.println("------------------------");
+		/*
 		select(41);
 		select(17);
 		select(28);
 		select(11);
 		select(99);
 		select(44);
+		select(16);
+		select(29);
+		select(23);
+		select(33);
+		select(46);
+		select(13);
+		select(15);
+		select(16);
+		select(5);
+		select(41);
+		select(11); //it means it works
+		remove(17);
+		*/
 
 		
 		
@@ -108,42 +123,101 @@ class Main
 		}		
 	}
 	
-	public static boolean rec_select(int key, int search){
+	public static int rec_select(int key, int search){ //searches others spots but first
 		
 		int current = content[key][0];
 		int index = content[key][1];
 		
 		if(search == current){
 			System.out.println("Achei rec");
-			return true;
+			return key;
 		}
 		else if(index == -1 || index == -2)
 		{
 			System.out.println("Não achei");
-			return false;
+			return -3;
 		}else
 		{
 			return rec_select(index, search);
 		}
 		
 	}	
-	public static boolean select(int x)
+	public static int select(int x)
 	{
 		int placement = (x % 13);
 		int index = 0;
-		if(content[header[placement][0]][0] == x)
+		if(header[placement][0] == -1) //makes sure invalid elements don't go OutOfBounds
+		{
+				System.out.println("Não achei");
+				return -3;
+		}
+		if(content[header[placement][0]][0] == x) //searches first spot
 		{
 			System.out.println("Achei de primeira");
-			return true;
+			return placement;
 		}	
 		index = header[placement][0];
-		return rec_select(index,x);
+		return rec_select(index,x); 
 	}			
 	public static void remove(int x)
 	{
-		if(select(x))
+		if(select(x) != -3)
 		{
-			
+			int placement = (x % 13);
+			int index = 0;
+			//first
+			if(content[header[placement][0]][0] == x) //searches first spot
+			{
+				if(content[header[placement][0]][1] != -1) // first spot! Are there more?
+				{
+					index = content[header[placement][0]][1];
+					int aux = content[index][0];
+					int auxp = content[index][1];
+					content[header[placement][0]][1] = auxp;
+					content[header[placement][0]][0] = aux;
+					content[index][0] = 0;
+					content[index][1] = -2;
+					
+					content[index][1] = -1; //clears place
+					System.out.println("E removi");
+					
+				} else 
+				{
+					content[header[placement][0]][0] = 0;
+					content[header[placement][0]][1] = -2;
+					header[placement][0] = -1;
+					header[placement][1] = -1;
+					
+					System.out.println("E removi");
+				}
+			} else
+			{
+				//middle
+				int key = select(x);
+				if(content[key][0] == x) //searches key spot
+				{
+					if(content[key][1] != -1) // Key spot! Are there more?
+					{
+						index = content[header[placement][0]][1];
+						int aux = content[index][0];
+						int auxp = content[index][1];
+						content[header[placement][0]][1] = auxp;
+						content[header[placement][0]][0] = aux;
+						
+						content[index][1] = -1; //clears place
+						System.out.println("E removi");
+						
+					} else 
+					{
+						content[header[placement][0]][0] = 0;
+						content[header[placement][0]][1] = -2;
+						header[placement][0] = -1;
+						header[placement][1] = -1;
+						
+						System.out.println("E removi");
+					}
+				}
+			}
 		}
 		
 		
