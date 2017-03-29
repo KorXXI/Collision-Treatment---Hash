@@ -41,7 +41,15 @@ public class Produto {
 		this.nome = nome;
 		this.setor = setor;
 		this.preco = preco;
+		next = -1;
 		codigo = contador.incrementAndGet();	
 	}
-	
+	public Produto()
+	{
+		nome = "nil";
+		setor = 0;
+		preco = 0;
+		next = -2;
+		codigo = -1;
+	}
 }
